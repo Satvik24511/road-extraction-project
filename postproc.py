@@ -29,6 +29,19 @@ def get_test_images(test_dir, num_images=5):
         
     return test_images
 
+def get_particular_images(test_dir, nums):
+    
+    test_images_paths = [os.path.join(test_dir, f"{num}_sat.jpg") for num in nums]
+    
+    test_images = []
+    for img_path in test_images_paths:
+        image = cv2.imread(img_path)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        test_images.append((image, img_path.split("_")[0]))
+        
+    return test_images
+    
+
 def skel(model, original_image, transform, device):
     transformed = transform(image=original_image)
     input_image_tensor = transformed['image'].unsqueeze(0).to(device)
@@ -58,7 +71,7 @@ def vectorize_mask(skeleton):
             xy_coords = contour.squeeze().tolist()
 
             line = LineString(xy_coords)
-            simplified_line = line.simplify(tolerance=1.5, preserve_topology=True) 
+            simplified_line = line.simplify(tolerance=1, preserve_topology=True).simplify(tolerance=0.5, preserve_topology=True)
             vector_lines.append(simplified_line)
             
     return vector_lines
@@ -140,8 +153,10 @@ def main():
     
     test_transform = config.val_transforms
     
+    nums = [463644, 583149,683694, 803789, 816042]
+    
     print("Loading test images...")
-    test_images_data = get_test_images(test_dir=config.TEST_DIR, num_images=5)
+    test_images_data = get_particular_images(test_dir=config.TEST_DIR, nums=nums)
     
     if not test_images_data:
         print("No images found in the test directory.")
