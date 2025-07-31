@@ -61,7 +61,7 @@ This phase focuses on leveraging deep learning to semantically understand and de
 * **Performance:** Achieved a best validation IoU of **0.5325**, demonstrating high accuracy in pixel-level road detection on unseen data.
 
 **Visual: Original Image & Predicted Mask**
-![Predicted Mask Example](outputs\mask\just_mask_803789.png)
+![Predicted Mask Example](outputs/mask/just_mask_803789.png)
 
 ### 4.2 Phase 2: Post-Processing & Topological Graph Construction
 
@@ -73,7 +73,7 @@ This is the sophisticated algorithmic core that transforms raw pixel predictions
 * **Method:** Utilized `skimage.morphology.skeletonize`, a robust algorithm that iteratively thins shapes while preserving their topological connectivity.
 
 **Visual: Skeleton Mask & Skeleton Overlay**
-![Skeletonization Example](outputs\skeleton\just_skeleton_803789.png)
+![Skeletonization Example](outputs/skeleton/just_skeleton_803789.png)
 
 #### 4.2.2 Vectorization (Pixel Graph Traversal)
 
@@ -85,7 +85,7 @@ This is the sophisticated algorithmic core that transforms raw pixel predictions
 * **Cleaning:** Generated `LineString`s are simplified using `line.simplify(tolerance=1.0)` to reduce jaggedness while preserving topology.
 
 **Visual: Raw Vector Overlay**
-![Raw Vector Overlay Example](outputs\vector\just_vectors_803789.png)
+![Raw Vector Overlay Example](outputs/vector/just_vectors_803789.png)
 
 #### 4.2.3 Topological Correction
 
@@ -102,7 +102,7 @@ This is the critical phase where geometric imperfections are resolved, and lines
     * **Method:** Builds a temporary `NetworkX` graph to check node degrees (connectivity). Removes lines shorter than `min_length` (e.g., 5-10 pixels) if they are dangling (degree 1 endpoint) or isolated. It also explicitly filters small, noisy loops (identified by `line.is_ring` and `line.area < max_noisy_loop_area`) regardless of their perimeter length.
 
 **Visual: Cleaned Vector Overlay**
-![Before Cleaning Overlay Example](outputs\vector\just_cleaned_vectors_2704.png)
+![Before Cleaning Overlay Example](outputs/vector/just_cleaned_vectors_2704.png)
 
 #### 4.2.4 Graph Construction
 
@@ -117,14 +117,14 @@ The project successfully delivers a complete pipeline for automated road network
 * **Topological Correctness:** The graph is topologically sound, ensuring proper connectivity and an accurate representation of the road network for analysis and navigation.
 
 **Visual: Final Network Overlay**
-![Final Network Overlay 1](outputs\final\final_803789.png)
-![Final Network Overlay 2](outputs\final\final_965066.png)
-![Final Network Overlay 3](outputs\final\final_134034.png)
-![Final Network Overlay 4](outputs\final\final_357084.png)
-![Final Network Overlay 5](outputs\final\final_489439.png)
-![Final Network Overlay 6](outputs\final\final_555827.png)
-![Final Network Overlay 7](outputs\final\final_633197.png)
-![Final Network Overlay 8](outputs\final\final_816042.png)
+![Final Network Overlay 1](outputs/final/final_803789.png)
+![Final Network Overlay 2](outputs/final/final_965066.png)
+![Final Network Overlay 3](outputs/final/final_134034.png)
+![Final Network Overlay 4](outputs/final/final_357084.png)
+![Final Network Overlay 5](outputs/final/final_489439.png)
+![Final Network Overlay 6](outputs/final/final_555827.png)
+![Final Network Overlay 7](outputs/final/final_633197.png)
+![Final Network Overlay 8](outputs/final/final_816042.png)
 
 ## 6. Challenges & Solutions
 
