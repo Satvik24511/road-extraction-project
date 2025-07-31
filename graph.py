@@ -283,41 +283,41 @@ def visualize_results(original_image, skeleton, raw_vectors, vector_lines, final
     overlay_skel_image[skeleton == 1] = (
         overlay_skel_image[skeleton == 1] * 0.5 + np.array([0, 255, 0]) * 0.5
     ).astype(np.uint8)
-    axes[1].imshow(overlay_skel_image)
-    axes[1].set_title('Skeleton Overlay')
-    axes[1].axis('off')
+    axes[3].imshow(overlay_skel_image)
+    axes[3].set_title('Skeleton Overlay')
+    axes[3].axis('off')
     
-    axes[2].imshow(original_image)
-    axes[2].set_title('Raw Vector Overlay')
+    axes[4].imshow(original_image)
+    axes[4].set_title('Raw Vector Overlay')
     for line in raw_vectors:
         if line.is_empty: 
             continue
         coords = np.array(line.coords)
         scaled_x_coords = coords[:, 0] * scale_x
         scaled_y_coords = coords[:, 1] * scale_y
-        axes[2].plot(scaled_x_coords, scaled_y_coords, color='blue', linewidth=1) 
-    for nodeB in final_nodes:
-        axes[2].plot(nodeB[0] * scale_x, nodeB[1] * scale_y, marker='o', color='red', markersize=2)
-    axes[2].set_aspect('equal')
-    axes[2].axis('off')
+        axes[4].plot(scaled_x_coords, scaled_y_coords, color='blue', linewidth=1) 
+    #for nodeB in final_nodes:
+     #   axes[2].plot(nodeB[0] * scale_x, nodeB[1] * scale_y, marker='o', color='red', markersize=2)
+    axes[4].set_aspect('equal')
+    axes[4].axis('off')
     
     
-    axes[3].imshow(original_image)
-    axes[3].set_title('Cleaned Vector Overlay')
+    axes[2].imshow(original_image)
+    axes[2].set_title('Cleaned Vector Overlay')
     for line in vector_lines:
         if line.is_empty: 
             continue
         coords = np.array(line.coords)
         scaled_x_coords = coords[:, 0] * scale_x
         scaled_y_coords = coords[:, 1] * scale_y
-        axes[3].plot(scaled_x_coords, scaled_y_coords, color='blue', linewidth=1) 
-    for nodeB in final_nodes:
-        axes[3].plot(nodeB[0] * scale_x, nodeB[1] * scale_y, marker='o', color='red', markersize=2)
-    axes[3].set_aspect('equal')
-    axes[3].axis('off')
+        axes[2].plot(scaled_x_coords, scaled_y_coords, color='blue', linewidth=1) 
+    #for nodeB in final_nodes:
+     #   axes[3].plot(nodeB[0] * scale_x, nodeB[1] * scale_y, marker='o', color='red', markersize=2)
+    axes[2].set_aspect('equal')
+    axes[2].axis('off')
     
-    axes[4].imshow(original_image)
-    axes[4].set_title('Final Network Overlay')
+    axes[1].imshow(original_image)
+    axes[1].set_title('Final Network Overlay')
     for u, v, data in G.edges(data=True):
         line_geometry = data['geometry']
         
@@ -325,7 +325,7 @@ def visualize_results(original_image, skeleton, raw_vectors, vector_lines, final
         scaled_x_coords = coords[:, 0] * scale_x
         scaled_y_coords = coords[:, 1] * scale_y
         
-        axes[4].plot(scaled_x_coords, scaled_y_coords, color='red', linewidth=2, zorder=2) 
+        axes[1].plot(scaled_x_coords, scaled_y_coords, color='red', linewidth=2, zorder=2) 
 
     for node_id, data in G.nodes(data=True):
         node_x = data['x']
@@ -345,9 +345,9 @@ def visualize_results(original_image, skeleton, raw_vectors, vector_lines, final
             node_color = 'white'
             marker_size = 0
         
-        axes[4].plot(scaled_node_x, scaled_node_y, marker='o', color=node_color, markersize=marker_size, zorder=3)
-    axes[4].axis('off')
-    axes[4].set_aspect('equal')
+        axes[1].plot(scaled_node_x, scaled_node_y, marker='o', color=node_color, markersize=marker_size, zorder=3)
+    axes[1].axis('off')
+    axes[1].set_aspect('equal')
     
     plt.tight_layout()
     plt.show()
